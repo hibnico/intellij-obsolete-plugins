@@ -17,18 +17,18 @@ public class PlayFakeRenameableReferenceProvider extends PsiReferenceProvider {
   @Override
   public PsiReference @NotNull [] getReferencesByElement(@NotNull final PsiElement element, @NotNull ProcessingContext context) {
 
-    if (element instanceof PsiLiteral) {
-      return new PsiReference[]{new PsiReferenceBase<>((PsiLiteral)element) {
+    if (element instanceof PsiLiteralValue) {
+      return new PsiReference[]{new PsiReferenceBase<>((PsiLiteralValue)element) {
         @Override
         public PsiElement resolve() {
-          return getOrCreateRenamebaleFakeElement((PsiLiteral)element);
+          return getOrCreateRenamebaleFakeElement((PsiLiteralValue)element);
         }
       }};
     }
     return PsiReference.EMPTY_ARRAY;
   }
 
-  public static RenameableFakePsiElement getOrCreateRenamebaleFakeElement(@NotNull final PsiLiteral expression) {
+  public static RenameableFakePsiElement getOrCreateRenamebaleFakeElement(@NotNull final PsiLiteralValue expression) {
     RenameableFakePsiElement data = expression.getUserData(RENAMEABLE_FAKE_PSI_ELEMENT_KEY);
     if (data == null) {
       data = createRenamebaleFakeElement(expression);
@@ -37,7 +37,7 @@ public class PlayFakeRenameableReferenceProvider extends PsiReferenceProvider {
     return data;
   }
 
-  public static RenameableFakePsiElement createRenamebaleFakeElement(@NotNull final PsiLiteral expression) {
+  public static RenameableFakePsiElement createRenamebaleFakeElement(@NotNull final PsiLiteralValue expression) {
     return new RenameableFakePsiElement(expression) {
       @Override
       public String getName() {

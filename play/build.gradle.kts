@@ -1,20 +1,26 @@
+
 plugins {
     id("java")
-    id("org.jetbrains.intellij") version "1.15.0"
+    id("org.jetbrains.intellij.platform") version "2.3.0"
 }
 
 group = "com.intellij"
-version = "2023.2.1"
+version = "2024.3.4"
 
 repositories {
     mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
-intellij {
-    version.set("2023.2.1")
-    type.set("IU") // Target IDE Platform
+dependencies {
+    intellijPlatform {
+        intellijIdeaUltimate("2024.3.4")
 
-    plugins.set(listOf("org.intellij.groovy", "com.intellij.persistence"))
+        bundledPlugin("org.intellij.groovy")
+        bundledPlugin("com.intellij.persistence")
+    }
 }
 
 java.sourceSets["main"].java {
@@ -24,22 +30,7 @@ java.sourceSets["main"].java {
 tasks {
     // Set the JVM compatibility versions
     withType<JavaCompile> {
-        sourceCompatibility = "17"
-        targetCompatibility = "17"
-    }
-
-    patchPluginXml {
-        sinceBuild.set("232")
-        untilBuild.set("241.*")
-    }
-
-    signPlugin {
-        certificateChain.set(System.getenv("CERTIFICATE_CHAIN"))
-        privateKey.set(System.getenv("PRIVATE_KEY"))
-        password.set(System.getenv("PRIVATE_KEY_PASSWORD"))
-    }
-
-    publishPlugin {
-        token.set(System.getenv("PUBLISH_TOKEN"))
+        sourceCompatibility = "21"
+        targetCompatibility = "21"
     }
 }
