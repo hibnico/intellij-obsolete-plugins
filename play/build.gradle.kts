@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.intellij.platform") version "2.3.0"
 }
 
-group = "com.intellij"
+group = "org.hibnet"
 version = "2024.3.4"
 
 repositories {
